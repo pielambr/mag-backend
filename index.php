@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
 <?php
-require_once('./functions/Magazijn.php');
+error_reporting(E_ALL | E_STRICT);
+ini_set('display_errors',1);
+ini_set('html_errors', 1);
+require_once(dirname(__FILE__) . '/functions/Magazijn.php');
+global $magazijn;
 ?>
 <head>
     <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
@@ -11,26 +15,8 @@ require_once('./functions/Magazijn.php');
 <body>
 <div class="container" id="content">
 <?php
-if($magazijn->isLoggedin()) {
+$magazijn->printMagazijn();
 ?>
-
-    <div class="col-md-12">
-        <form role="form">
-            <label for="code">Code</label>
-            <input type="text" class="form-control" id="code" placeholder="Barcode">
-            <label for="name">Naam</label>
-            <input type="text" class="form-control" id="name" placeholder="Product naam">
-            <label for="name">Leverancier</label>
-            <input type="text" class="form-control" id="dealer" placeholder="Leverancier">
-            <button type="submit" class="btn btn-default">Insert</button>
-        </form>
-        <table class="table table-bordered">
-            <?php $magazijn->printMagazijn(); ?>
-        </table>
-    </div>
-<?php } else { ?>
-
-<?php } ?>
 </div>
 </body>
 </html>

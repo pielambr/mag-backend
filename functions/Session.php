@@ -1,5 +1,5 @@
 <?php
-
+require_once(dirname(__FILE__) . '/util.php');
 class Session {
 
     private $settings;
@@ -16,20 +16,35 @@ class Session {
         return false;
     }
 
-    function login($pw) {
-        if($pw == $this->settings["application_password"]){
-            setcookie("sko_magazijn", md5($pw), time() + 360000, '/');
-            return true;
+    function login() {
+        if(Utility::checkPostRequest(("password"))){
+            if($_POST["password"] == $this->settings["application_password"]){
+                Utility::redirect(dirname(__FILE__) . "/../index.php");
+                setcookie("sko_magazijn", md5($_POST["password"]), time() + 360000, '/');
+                die();
+            }
         }
-        return false;
+        Utility::redirect(dirname(__FILE__) . "/../index.php");
+        die();
     }
 
     function logout() {
+        Utility::redirect(dirname(__FILE__) . "/../index.php");
         setcookie("sko_magazijn", "", time()-3600, '/');
+        die();
     }
 
     function handleRequests() {
-
+        if(array_key_exists("action", $_GET)){
+            switch ($_GET["action"]) {
+                case "logout":
+                    $this->logout();
+                    return;
+                case "login":
+                    $this->login();
+                    return;
+            }
+        }
     }
 }
 

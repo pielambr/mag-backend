@@ -27,22 +27,45 @@ class Magazijn {
 
     function printMagazijn() {
         if($this->session->isLoggedIn()){
-
+            $this->printNavigation();
+            $this->printBarcodes();
+            $this->printBarcodeForm();
         } else {
-            printLogin();
+            $this->printLogin();
         }
     }
 
-    function printNav() {
+    function printBarcodeForm() {
+        echo '<div class="col-md-4">
+                <form role="form">
+                    <label for="code">Code</label>
+                    <input type="text" class="form-control" id="code" placeholder="Barcode">
+                    <label for="name">Naam</label>
+                    <input type="text" class="form-control" id="name" placeholder="Product naam">
+                    <label for="name">Leverancier</label>
+                    <input type="text" class="form-control" id="dealer" placeholder="Leverancier">
+                    <button type="submit" class="btn btn-default">Insert</button>
+            </form>';
+    }
+
+    function printBarcodes() {
+        echo '<div class="col-md-8">
+                <table class="table table-bordered">'
+                        . '' .
+                '</table>
+            </div>';
+    }
+
+    function printNavigation() {
         echo '<nav class="navbar navbar-default" role="navigation">
                 <div class="container">
-                    <button type="button" class="btn btn-default navbar-btn right" href="functions/Session.php?action=logout">Logout</button>
+                    <a type="button" class="btn btn-default navbar-btn right" href="functions/Session.php?action=logout">Logout</a>
                 </div>
             </nav>';
     }
 
     function printLogin() {
-        echo '<div class = col-md-12>
+        echo '<div class = col-md-4>
                 <form class="center-block" role="form" method="post" action="functions/Session.php?action=login">
                     <label for="password">Password</label>
                     <input type="password" name="password" class="form-control" id="password" placeholder="Password">
