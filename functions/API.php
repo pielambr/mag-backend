@@ -29,6 +29,9 @@ class API {
                 case "return":
                     $this->returnBarcode();
                     return;
+                case "dealers":
+                    $this->returnDealers();
+                    return;
                 default:
                     $this->api_error();
                     return;
@@ -71,6 +74,14 @@ class API {
         if(Utility::checkPostRequest(array("barcode", "password"))) {
             if($this->validPassword()) {
 
+            }
+        }
+    }
+
+    function returnDealers() {
+        if(Utility::checkPostRequest(array("password"))) {
+            if($this->validPassword()) {
+                Utility::json_die($this->database->getLeveranciers());
             }
         }
     }

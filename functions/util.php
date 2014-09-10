@@ -3,7 +3,7 @@ class Utility {
 
     static function checkPostRequest($variables){
         foreach($variables as $i){
-            if(!isset($_POST[$i])){
+            if(!isset($_POST[$i]) || $_POST[$i] == ""){
                 http_response_code(400);
                 return false;
             }

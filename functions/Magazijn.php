@@ -24,23 +24,25 @@ class Magazijn {
     }
 
     function printBarcodeForm() {
-        echo '<div class="col-md-4">
-                <form role="form">
-                    <label for="code">Code</label>
-                    <input type="text" class="form-control" id="code" placeholder="Barcode">
-                    <label for="name">Naam</label>
-                    <input type="text" class="form-control" id="name" placeholder="Product naam">
-                    <label for="name">Leverancier</label>
-                    <input type="text" class="form-control" id="dealer" placeholder="Leverancier">
-                    <button type="submit" class="btn btn-default">Insert</button>
-            </form>';
+        echo '<div class="col-md-4 form-group">
+                <div class="input-group">
+                    <input type="text" id="barcode_code" class="form-control" placeholder="Barcode">
+                </div>
+                <div class="input-group">
+                    <input type="text" id="barcode_name" class="form-control" placeholder="Beschrijving">
+                </div>
+                <div class="input-group">
+                    <input type="text" id="barcode_dealer" class="form-control" placeholder="Leverancier">
+                </div>
+                <button id="barcode_btn" class="btn btn-default">Insert</button>
+            </div>';
     }
 
     function printBarcodes() {
         echo '<div class="col-md-8">
-                <table class="table table-bordered">'
-                        . '' .
-                '</table>
+                <div id="barcode_dialog" class="hidden" title="Barcode added">Barcode successfully added!</div>
+                <table class="table table-bordered" id ="barcode_tabel">
+                </table>
             </div>';
     }
 

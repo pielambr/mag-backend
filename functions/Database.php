@@ -22,9 +22,21 @@ class Database {
     }
 
     function getBarcodes() {
-        $stmt = $this->connection->prepare("SELECT code, description, naam AS leverancier, returned FROM barcodes
-                                        INNER JOIN leveranciers ON
-                                        barcodes.leverancier = leveranciers.id");
+        $stmt = $this->connection->prepare("SELECT code, description, naam AS leverancier, returned, latitude, longitude FROM barcodes
+                                        LEFT OUTER JOIN leveranciers ON
+                                        barcodes.leverancier = leveranciers.id
+                                        UNION
+                                        SELECT code, description, naam AS leverancier, returned, latitude, longitude FROM barcodes
+                                        RIGHT OUTER JOIN leveranciers ON
+                                        barcodes.leverancier = leveranciers.id
+                                        ");
+        $stmt->execute();
+        $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $res;
+    }
+
+    function getLeveranciers() {
+        $stmt = $this->connection->prepare("SELECT * FROM leveranciers");
         $stmt->execute();
         $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $res;
@@ -32,7 +44,7 @@ class Database {
 
     function insertBarcode($values) {
         try {
-            if(isset($_POST["leverancier"]) && $_POST["leverancier"] == ""){
+            if(Utility::checkPostRequest(array("leverancier"))){
                 $leverancier_id = $this->checkLeverancier($values["leverancier"]);
                 $stmt = $this->connection->prepare("INSERT INTO barcodes(code, description, leverancier) VALUES(:code, :descr, :lever)");
                 $stmt->bindParam(":lever", $leverancier_id);
