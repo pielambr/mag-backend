@@ -13,18 +13,6 @@ class Magazijn {
         $this->session = $session;
     }
 
-    function addBarcode() {
-
-    }
-
-    function deleteBarcode(){
-
-    }
-
-    function updateBarcode(){
-
-    }
-
     function printMagazijn() {
         if($this->session->isLoggedIn()){
             $this->printNavigation();

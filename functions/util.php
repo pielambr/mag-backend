@@ -1,18 +1,5 @@
 <?php
 class Utility {
-    function __construct() {
-        $this->handleRequests();
-    }
-
-    function handleRequests() {
-        if(array_key_exists("redirect", $_GET)){
-            header("Location: " . $_GET["redirect"]);
-        }
-    }
-
-    function checkGetRequest($variables) {
-        //
-    }
 
     static function checkPostRequest($variables){
         foreach($variables as $i){
@@ -24,9 +11,30 @@ class Utility {
         return true;
     }
 
-    static function redirect($url){
-        header("Location: " . dirname(__FILE__) . "/util.php?request=" . $url);
+    static function redirectIndex(){
+        header("Location: " . Utility::getPath() . "/../index.php");
+        die();
+    }
+
+    static function getPath() {
+        $server = 'http://' . $_SERVER['HTTP_HOST'];
+        $server .= rtrim(dirname($_SERVER['PHP_SELF']), '/\\');;
+        return $server;
+    }
+
+    static function checkValues($values, $arr) {
+        foreach($values as $i) {
+            if(!array_key_exists($i, $arr)){
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
+
+    static function json_die($content) {
+        header('Content-Type: application/json; Charset=UTF-8');
+        die(json_encode($content));
     }
 }
-$util = new Utility();
 ?>

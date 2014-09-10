@@ -19,18 +19,18 @@ class Session {
     function login() {
         if(Utility::checkPostRequest(("password"))){
             if($_POST["password"] == $this->settings["application_password"]){
-                Utility::redirect(dirname(__FILE__) . "/../index.php");
                 setcookie("sko_magazijn", md5($_POST["password"]), time() + 360000, '/');
+                Utility::redirectIndex();
                 die();
             }
         }
-        Utility::redirect(dirname(__FILE__) . "/../index.php");
+        Utility::redirectIndex();
         die();
     }
 
     function logout() {
-        Utility::redirect(dirname(__FILE__) . "/../index.php");
         setcookie("sko_magazijn", "", time()-3600, '/');
+        Utility::redirectIndex();
         die();
     }
 
