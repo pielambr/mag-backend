@@ -35,6 +35,12 @@ function loadBarcodes() {
                 row.append(descr);
                 var lever = $('<td>').text(value["leverancier"]);
                 row.append(lever);
+                if(value["latitude"] && value["longitude"] && value["latitude"] != "" && value["longitude"] != ""){
+                    var loc = $('<td>').
+                        html('<a href="http://maps.google.com/?q=' + value["latitude"] + ',' + value["longitude"] + '" target="_blank"><span class="glyphicon glyphicon-globe"></span></a>').
+                        css("text-align", "center");
+                    row.append(loc);
+                }
                 table.append(row);
             });
         });

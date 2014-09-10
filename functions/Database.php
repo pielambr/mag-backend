@@ -44,15 +44,13 @@ class Database {
 
     function insertBarcode($values) {
         try {
-            if(Utility::checkPostRequest(array("leverancier"))){
-                $leverancier_id = $this->checkLeverancier($values["leverancier"]);
-                $stmt = $this->connection->prepare("INSERT INTO barcodes(code, description, leverancier) VALUES(:code, :descr, :lever)");
-                $stmt->bindParam(":lever", $leverancier_id);
-            } else {
-                $stmt = $this->connection->prepare("INSERT INTO barcodes(code, description) VALUES(:code, :descr)");
-            }
+            $leverancier_id = $values["leverancier"] ? $this->checkLeverancier($values["leverancier"]) : null;
+            $stmt = $this->connection->prepare("INSERT INTO barcodes(code, description, leverancier, latitude, longitude) VALUES(:code, :descr, :lever, :lat, :long)");
+            $stmt->bindParam(":lever", $leverancier_id);
             $stmt->bindParam(":code", $_POST["barcode"]);
             $stmt->bindParam(":descr", $_POST["beschr"]);
+            $stmt->bindParam(":lat", $values["latitude"]);
+            $stmt->bindParam(":long", $values["longitude"]);
             $stmt->execute();
             return array("success" => "Successfully inserted data");
         } catch (PDOException $ex) {
