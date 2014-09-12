@@ -50,7 +50,7 @@ class Magazijn {
         echo '<nav class="navbar navbar-default" role="navigation">
                 <div class="container">
                     <a type="button" class="btn btn-default navbar-btn" href="functions/Session.php?action=logout">Logout</a>
-                    <a type="button" class="btn btn-default navbar-btn" href="map.php">Logout</a>
+                    <a type="button" class="btn btn-default navbar-btn" href="map.php">Map with non-returned items</a>
                 </div>
             </nav>';
     }
