@@ -41,6 +41,9 @@ function loadBarcodes() {
                         css("text-align", "center");
                     row.append(loc);
                 }
+                if(value["returned"] != 0){
+                    row.addClass("success");
+                }
                 table.append(row);
             });
         });
@@ -72,7 +75,7 @@ function newBarcode() {
         dataType: "json",
         type: "POST",
         url: "./functions/API.php?action=insert",
-        data: {"password": password, "leverancier": leverancier, "barcode": code, "beschr":descr}
+        data: {"password": password, "leverancier": leverancier, "barcode": code, "description":descr}
     }).fail(function(e){
             alert("Error happened during insert");
         }).done(function(data) {

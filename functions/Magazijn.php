@@ -40,7 +40,7 @@ class Magazijn {
 
     function printBarcodes() {
         echo '<div class="col-md-8">
-                <div id="barcode_dialog" class="hidden" title="Barcode added">Barcode successfully added!</div>
+                <div class="hidden"><div id="barcode_dialog" title="Barcode added"><p>Barcode successfully added!</p></div></div>
                 <table class="table table-bordered" id ="barcode_tabel">
                 </table>
             </div>';
@@ -49,7 +49,8 @@ class Magazijn {
     function printNavigation() {
         echo '<nav class="navbar navbar-default" role="navigation">
                 <div class="container">
-                    <a type="button" class="btn btn-default navbar-btn right" href="functions/Session.php?action=logout">Logout</a>
+                    <a type="button" class="btn btn-default navbar-btn" href="functions/Session.php?action=logout">Logout</a>
+                    <a type="button" class="btn btn-default navbar-btn" href="map.php">Logout</a>
                 </div>
             </nav>';
     }

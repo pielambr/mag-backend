@@ -26,12 +26,14 @@ class API {
                 case "update":
                     $this->updateBarcode();
                     return;
-                case "return":
-                    $this->returnBarcode();
+                case "get":
+                    $this->getBarcode();
                     return;
                 case "dealers":
                     $this->returnDealers();
                     return;
+                case "checkout":
+                    $this->checkoutBarcode();
                 default:
                     $this->api_error();
                     return;
@@ -58,7 +60,7 @@ class API {
     }
 
     function insertBarcode() {
-        if(Utility::checkPostRequest(array("barcode", "beschr", "password"))){
+        if(Utility::checkPostRequest(array("barcode", "description", "password"))){
             if($this->validPassword()){
                 Utility::json_die($this->database->insertBarcode($_POST));
             }
@@ -67,15 +69,30 @@ class API {
     }
 
     function updateBarcode() {
-
-    }
-
-    function returnBarcode() {
-        if(Utility::checkPostRequest(array("barcode", "password"))) {
-            if($this->validPassword()) {
-
+        if(Utility::checkPostRequest(array("barcode", "password", "latitude", "longitude"))){
+            if($this->validPassword()){
+                Utility::json_die($this->database->updateBarcode($_POST));
             }
         }
+        $this->missing_parameters();
+    }
+
+    function checkoutBarcode() {
+        if(Utility::checkPostRequest(array("barcode", "password"))){
+            if($this->validPassword()){
+                Utility::json_die($this->database->checkoutBarcode($_POST));
+            }
+        }
+        $this->missing_parameters();
+    }
+
+    function getBarcode() {
+        if(Utility::checkPostRequest(array("barcode", "password"))) {
+            if($this->validPassword()) {
+                Utility::json_die($this->database->getBarcode($_POST));
+            }
+        }
+        $this->missing_parameters();
     }
 
     function returnDealers() {
@@ -84,6 +101,7 @@ class API {
                 Utility::json_die($this->database->getLeveranciers());
             }
         }
+        $this->missing_parameters();
     }
 
     function api_error() {
