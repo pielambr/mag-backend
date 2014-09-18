@@ -15,10 +15,10 @@ global $magazijn;
     <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="//code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-    <script src="js/magazijn.js"></script>
+    <script src="js/magazijn.min.js"></script>
     <title>Magazijn</title>
 </head>
-<body>
+<body style="background: url('img/logo_sko.png') no-repeat fixed center;">
 <div class="container" id="content">
 <?php
 $magazijn->printMagazijn();

@@ -34,6 +34,8 @@ class API {
                     return;
                 case "checkout":
                     $this->checkoutBarcode();
+                case "delete":
+                    $this->deleteBarcode();
                 default:
                     $this->api_error();
                     return;
@@ -99,6 +101,15 @@ class API {
         if(Utility::checkPostRequest(array("password"))) {
             if($this->validPassword()) {
                 Utility::json_die($this->database->getLeveranciers());
+            }
+        }
+        $this->missing_parameters();
+    }
+
+    function deleteBarcode() {
+        if(Utility::checkPostRequest(array("barcode", "password"))) {
+            if($this->validPassword()) {
+                Utility::json_die($this->database->deleteBarcode($_POST));
             }
         }
         $this->missing_parameters();

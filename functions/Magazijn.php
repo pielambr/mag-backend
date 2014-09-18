@@ -41,6 +41,7 @@ class Magazijn {
     function printBarcodes() {
         echo '<div class="col-md-8">
                 <div class="hidden"><div id="barcode_dialog" title="Barcode added"><p>Barcode successfully added!</p></div></div>
+                <div class="hidden"><div id="barcode_delete" title="Delete barcode"><p>Are you sure you wish to delete this item?</p></div></div>
                 <table class="table table-bordered" id ="barcode_tabel">
                 </table>
             </div>';
@@ -51,6 +52,7 @@ class Magazijn {
                 <div class="container">
                     <a type="button" class="btn btn-default navbar-btn" href="functions/Session.php?action=logout">Logout</a>
                     <a type="button" class="btn btn-default navbar-btn" href="map.php">Map with non-returned items</a>
+                    <p class="navbar-text" style="float:right;margin-right:2%" id="magazijn_status"></p>
                 </div>
             </nav>';
     }

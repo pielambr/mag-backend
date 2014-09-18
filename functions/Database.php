@@ -30,14 +30,10 @@ class Database
             $stmt = $this->connection->prepare("SELECT code, description, naam AS leverancier, returned, latitude, longitude, last_updated FROM barcodes
                                         LEFT OUTER JOIN leveranciers ON
                                         barcodes.leverancier = leveranciers.id
-                                        UNION
-                                        SELECT code, description, naam AS leverancier, returned, latitude, longitude, last_updated FROM barcodes
-                                        RIGHT OUTER JOIN leveranciers ON
-                                        barcodes.leverancier = leveranciers.id
                                         ");
             $stmt->execute();
             $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            if($res){
+            if ($res) {
                 return $res;
             } else {
                 return array();
@@ -54,7 +50,7 @@ class Database
             $stmt = $this->connection->prepare("SELECT * FROM leveranciers");
             $stmt->execute();
             $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            if($res){
+            if ($res) {
                 return $res;
             } else {
                 return array();
@@ -133,16 +129,11 @@ class Database
             $stmt = $this->connection->prepare("SELECT code, description, naam AS leverancier, returned, latitude, longitude, last_updated FROM barcodes
                                         LEFT OUTER JOIN leveranciers ON
                                         barcodes.leverancier = leveranciers.id WHERE barcodes.code = :code
-                                        UNION
-                                        SELECT code, description, naam AS leverancier, returned, latitude, longitude, last_updated FROM barcodes
-                                        RIGHT OUTER JOIN leveranciers ON
-                                        barcodes.leverancier = leveranciers.id WHERE barcodes.code = :code2
                                         ");
             $stmt->bindParam(":code", $values["barcode"]);
-            $stmt->bindParam(":code2", $values["barcode"]);
             $stmt->execute();
             $res = $stmt->fetch(PDO::FETCH_ASSOC);
-            if($res){
+            if ($res) {
                 return $res;
             } else {
                 return array();
@@ -153,7 +144,8 @@ class Database
         }
     }
 
-    function updateBarcode($values) {
+    function updateBarcode($values)
+    {
         try {
             $stmt = $this->connection->prepare("UPDATE barcodes
                                                 SET longitude = :longitude, latitude = :latitude
@@ -168,8 +160,22 @@ class Database
             return array("error" => $ex);
         }
     }
-}
 
+    function deleteBarcode($values)
+    {
+        try {
+            $stmt = $this->connection->prepare("DELETE FROM barcodes
+                                                WHERE code = :code");
+            $stmt->bindParam(":code", $values["barcode"]);
+            $stmt->execute();
+            return array("success" => "Item deleted!");
+        } catch (PDOException $ex) {
+            http_response_code(500);
+            return array("error" => $ex);
+        }
+    }
+
+}
 
 $database = new Database();
 ?>
